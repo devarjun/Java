@@ -11,6 +11,7 @@
   - [Creating Custom Exceptions](#creating-custom-exceptions)
   - [Exception Propagation](#exception-propagation)
   - [Best Practices](#best-practices)
+  - [Types of Exceptions](#types-of-exceptions)
 
 ## Exception Handling
 
@@ -301,3 +302,97 @@ Checked vs. unchecked exception propagation:
 9. **Create custom exceptions** for domain-specific errors
 10. **Log exceptions** with appropriate context
 ![image](https://github.com/user-attachments/assets/b384dd90-9a69-44ba-93f4-2e11d1931bcc)
+
+###Types of Exceptions
+# Types of Exceptions in Java
+
+In Java, exceptions are categorized into three main types:
+
+## 1. Checked Exceptions
+These are exceptions that are checked at compile-time. The compiler requires these exceptions to be either caught using try-catch blocks or declared using the `throws` clause.
+
+Examples:
+- `IOException`
+- `SQLException`
+- `ClassNotFoundException`
+- `FileNotFoundException`
+
+```java
+try {
+    FileInputStream file = new FileInputStream("file.txt");
+} catch (FileNotFoundException e) {
+    System.out.println("File not found: " + e.getMessage());
+}
+```
+
+## 2. Unchecked Exceptions (Runtime Exceptions)
+These exceptions occur at runtime and are not checked at compile-time. They are subclasses of `RuntimeException` and represent programming errors that could have been avoided.
+
+Examples:
+- `NullPointerException`
+- `ArrayIndexOutOfBoundsException`
+- `ArithmeticException`
+- `IllegalArgumentException`
+- `NumberFormatException`
+
+```java
+// Example of an unchecked exception
+int[] arr = new int[5];
+// This will throw ArrayIndexOutOfBoundsException at runtime
+arr[10] = 50;
+```
+
+## 3. Errors
+These are serious problems that are not meant to be caught or handled by applications. They usually indicate external resource failures, JVM issues, or other critical conditions.
+
+Examples:
+- `OutOfMemoryError`
+- `StackOverflowError`
+- `VirtualMachineError`
+- `AssertionError`
+
+```java
+// This will eventually cause a StackOverflowError
+public void recursiveMethod() {
+    recursiveMethod(); // Infinite recursion
+}
+```
+
+## Exception Hierarchy
+The exception hierarchy in Java:
+
+```
+Throwable
+├── Error (unchecked)
+│   ├── OutOfMemoryError
+│   ├── StackOverflowError
+│   └── ...
+└── Exception
+    ├── IOException (checked)
+    ├── SQLException (checked)
+    ├── ClassNotFoundException (checked)
+    └── RuntimeException (unchecked)
+        ├── NullPointerException
+        ├── ArithmeticException
+        ├── IllegalArgumentException
+        └── ...
+```
+
+## Custom Exceptions
+Java allows developers to create their own exception classes by extending either `Exception` (for checked exceptions) or `RuntimeException` (for unchecked exceptions).
+
+```java
+// Custom checked exception
+public class CustomCheckedException extends Exception {
+    public CustomCheckedException(String message) {
+        super(message);
+    }
+}
+
+// Custom unchecked exception
+public class CustomRuntimeException extends RuntimeException {
+    public CustomRuntimeException(String message) {
+        super(message);
+    }
+}
+```
